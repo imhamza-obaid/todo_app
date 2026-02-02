@@ -33,6 +33,11 @@ class TodosController < ApplicationController
     redirect_to root_path
   end
 
+  def clear_completed
+    Todo.where(completed: true).delete_all
+    redirect_to root_path, notice: "Completed todos cleared."
+  end
+
   private
 
   def set_todo
