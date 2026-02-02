@@ -1,0 +1,53 @@
+<h1>Todos</h1>
+
+<% if notice.present? %>
+  <p style="color: green;"><%= notice %></p>
+<% end %>
+
+<h2>Add a todo</h2>
+
+<%= form_with model: @todo, url: todos_path do |f| %>
+  <% if @todo.errors.any? %>
+    <div style="color: red;">
+      <p><strong><%= pluralize(@todo.errors.count, "error") %>:</strong></p>
+      <ul>
+        <% @todo.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title %><br />
+    <%= f.text_field :title, placeholder: "Buy milk, fix the world, etc." %>
+  </div>
+
+  <div style="margin-top: 8px;">
+    <%= f.submit "Add" %>
+  </div>
+<% end %>
+
+<hr />
+
+<h2>List</h2>
+
+<ul>
+  <% @todos.each do |todo| %>
+    <li>
+      <%= form_with model: todo, url: todo_path(todo), method: :patch, style: "display:inline;" do |f| %>
+        <%= f.check_box :completed, checked: todo.completed, onchange: "this.form.submit();" %>
+      <% end %>
+
+      <strong style="<%= 'text-decoration: line-through;' if todo.completed %>">
+        <%= todo.title %>
+      </strong>
+
+      <%= link_to "Edit", edit_todo_path(todo), style: "margin-left: 10px;" %>
+
+      <%= button_to "Delete", todo_path(todo), method: :delete,
+            form: { style: "display:inline;" },
+            data: { turbo_confirm: "Delete this todo?" } %>
+    </li>
+  <% end %>
+</ul>

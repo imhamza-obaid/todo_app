@@ -1,0 +1,28 @@
+<h1>Edit Todo</h1>
+
+<%= form_with model: @todo do |f| %>
+  <% if @todo.errors.any? %>
+    <div style="color: red;">
+      <ul>
+        <% @todo.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+
+  <div style="margin-top: 8px;">
+    <%= f.label :completed %>
+    <%= f.check_box :completed %>
+  </div>
+
+  <div style="margin-top: 8px;">
+    <%= f.submit "Save" %>
+    <%= link_to "Back", root_path, style: "margin-left: 10px;" %>
+  </div>
+<% end %>
