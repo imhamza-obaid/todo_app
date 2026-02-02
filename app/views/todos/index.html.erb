@@ -32,6 +32,12 @@
 
 <h2>List</h2>
 
+<%= button_to "Clear completed",
+      clear_completed_todos_path,
+      method: :delete,
+      data: { turbo_confirm: "Clear all completed todos?" },
+      style: "margin-bottom: 10px;" %>
+
 <ul>
   <% @todos.each do |todo| %>
     <li>
